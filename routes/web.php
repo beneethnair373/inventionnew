@@ -11,11 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/tasks/create', 'TasksController@create');
-Route::post('/projects/{project}/tasks', 'TasksController@store');
+Route::get('/', 'TasksController@index');
+Route::post('/inventory', 'TasksController@store');
 
 Route::get('/word', 'ReportsController@word');
 Route::get('/excel', 'ReportsController@excel');

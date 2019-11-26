@@ -22,16 +22,16 @@
       <div class="modal-body">
       <form>
   <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" id="Name">
+    <label for="name" v-model='new_task.name'>Name</label>
+    <input type="text" class="form-control" name="name">
   </div>
   <div class="form-group">
-    <label for="name">Quantity</label>
-    <input type="number" class="form-control" id="Quantity">
+    <label for="name" v-model='new_task.quantity'>Quantity</label>
+    <input type="number" class="form-control" name="quantity">
   </div>
   <div class="form-group" >
-  <label for="sel1">Category</label>
-  <select class="form-control" id="sel1" name="Category">
+  <label for="sel1" v-model='new_task.quantity'>Category</label>
+  <select class="form-control" id="sel1" name="category">
     <option class="dropdown-item" href="#">Equipment</option>
     <option class="dropdown-item" href="#">Utensils</option>
   </select>
@@ -55,37 +55,58 @@
       <th scope="col">Actions</th>
     </tr>
   </thead>
+  <tr v-for = "task in tasks">
+    <td>
+    @{{task.id}}
+  </td>
+  <td>
+    @{{task.name}}
+  </td>
+    <td>
+    @{{task.quantity}}
+  </td>
+    <td>
+    @{{task.name}}
+  </td>
+    <td>
+      <button type="button" class="btn btn-primary" >Edit</button>
+    </td>
+  </tr>
 </table>
-<li class="list-group-item" v-for='item in items'>@{{ task.title }}</li>
 </div>
+</div>
+</div>
+ </div>
 @endsection
 
-@section('scripts')
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+       var tasks = @json($tasks);    
+    
+  </script>
   <script>
-    // @json($php-var);
-    //    var items= @json($items);
        var vm = new Vue({
       el:'#app',
       data:{
         tasks: tasks,
-        project: project,
         new_task: {
-          task_category_id: 1,
-          title:'',
+          id: 1,
+          name:'',
+          quantity:1,
+          category:'',
         }
       },
-      methods: {
+        methods: {
         postNewTask() {
-          axios.post('/projects/'+this.project.id+'/tasks', this.new_task)
+          axios.post('/inventory'+this.new_task)
             .then(({data})=>{
               this.tasks.push(data);
-              this.new_task.title = '';
+              this.new_task.name = '';
+              this.new_task.category = '';
               console.log(data);
             });
         }
       }
     });
   </script>
-@endsection
